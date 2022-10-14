@@ -1,0 +1,13 @@
+spring:
+   datasource:
+      url: jdbc:mysql://127.0.0.1:3305/springjpa-project
+      username: root
+   driver-class-name: com.mysql.jdbc.Driver
+   jpa:
+      show-sql: true
+      hibernate:
+         ddl-auto: update
+   security:
+      user:
+         name: MDF
+         password: 12345
