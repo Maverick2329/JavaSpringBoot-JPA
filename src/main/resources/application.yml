@@ -7,7 +7,10 @@ spring:
       show-sql: true
       hibernate:
          ddl-auto: update
-   security:
-      user:
-         name: MDF
-         password: 12345
+   #security:
+      #user:
+         #name: MDF
+         #password: 12345
+URLS:
+   Authenticated: /api/student/byEmail,/api/student/update,/api/student/all,/api/course/**
+   Permitall: /api/student/register

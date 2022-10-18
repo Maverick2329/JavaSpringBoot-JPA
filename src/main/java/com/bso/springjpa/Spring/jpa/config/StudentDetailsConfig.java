@@ -2,6 +2,7 @@ package com.bso.springjpa.Spring.jpa.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.bso.springjpa.Spring.jpa.models.Authority;
 import com.bso.springjpa.Spring.jpa.models.Student;
 import com.bso.springjpa.Spring.jpa.repository.IStudentRepository;
 
@@ -64,7 +66,7 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 			if(_passwordEncoder.matches(password, student.getPassword())) {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(new SimpleGrantedAuthority(student.getRole()));
-				return new UsernamePasswordAuthenticationToken(userName, password, authorities);
+				return new UsernamePasswordAuthenticationToken(userName, password, getGrantedAuthorities(student.getAuthorities()));
 			}
 			else {
 				throw new BadCredentialsException("No User registered with those credential");
@@ -72,6 +74,16 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 		}		
 		throw new BadCredentialsException("No User registered with those credential");
 	}
+	
+	
+	private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities){
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+		for(Authority authority: authorities) {
+			grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));
+		}
+		return grantedAuthorities;
+	}
+	
 
 	@Override
 	public boolean supports(Class<?> authentication) {

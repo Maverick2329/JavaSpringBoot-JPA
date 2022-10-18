@@ -2,6 +2,7 @@ package com.bso.springjpa.Spring.jpa.config;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class ProjectSecurityConfig {
 
+	@Value("${URLS.Authenticated}")
+	private String authenticatedURL;
+	
+	@Value("${URLS.Permitall}")
+	private String permitedURL;
+	
+	
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception{
 		/**
@@ -37,10 +45,15 @@ public class ProjectSecurityConfig {
 		//.and().httpBasic();
 	//return http.build();
 		
+		//.antMatchers("/api/**").authenticated()
+		//.antMatchers("/api/student/register").permitAll()
+		
+		String[] listAuthenticated = this.authenticatedURL.split(",");
+		String[] listUrlPermited = this.permitedURL.split(",");
 		
 		http.authorizeHttpRequests()
-			.antMatchers("/api/**").authenticated()
-			.antMatchers("/api/student/register").permitAll()
+			.antMatchers(listAuthenticated).authenticated()
+			.antMatchers(listUrlPermited).permitAll()
 			.and().formLogin()
 			.and().httpBasic()
 			.and().csrf().disable();
