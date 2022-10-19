@@ -64,8 +64,8 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 		
 		if(student != null) {
 			if(_passwordEncoder.matches(password, student.getPassword())) {
-				List<GrantedAuthority> authorities = new ArrayList<>();
-				authorities.add(new SimpleGrantedAuthority(student.getRole()));
+				//List<GrantedAuthority> authorities = new ArrayList<>();
+				//authorities.add(new SimpleGrantedAuthority(student.getRole()));
 				return new UsernamePasswordAuthenticationToken(userName, password, getGrantedAuthorities(student.getAuthorities()));
 			}
 			else {

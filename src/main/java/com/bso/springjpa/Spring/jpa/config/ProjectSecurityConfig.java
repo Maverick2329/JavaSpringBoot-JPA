@@ -14,8 +14,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class ProjectSecurityConfig {
 
-	@Value("${URLS.Authenticated}")
-	private String authenticatedURL;
+	@Value("${URLS.Authenticated.WithoutRoles}")
+	private String authenticatedURLWithOutRoles;
+	
+	@Value("${URLS.Authenticated.WithBalanceRole}")
+	private String authenticatedURLWithBalanceRoles;
 	
 	@Value("${URLS.Permitall}")
 	private String permitedURL;
@@ -48,11 +51,13 @@ public class ProjectSecurityConfig {
 		//.antMatchers("/api/**").authenticated()
 		//.antMatchers("/api/student/register").permitAll()
 		
-		String[] listAuthenticated = this.authenticatedURL.split(",");
+		String[] listAuthenticated = this.authenticatedURLWithOutRoles.split(",");
+		String[] listAuthenticatedWithBalanceRole = this.authenticatedURLWithBalanceRoles.split(",");
 		String[] listUrlPermited = this.permitedURL.split(",");
 		
 		http.authorizeHttpRequests()
 			.antMatchers(listAuthenticated).authenticated()
+			.antMatchers(listAuthenticatedWithBalanceRole).hasAuthority("VIEWBALANCE")
 			.antMatchers(listUrlPermited).permitAll()
 			.and().formLogin()
 			.and().httpBasic()

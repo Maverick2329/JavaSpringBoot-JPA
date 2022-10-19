@@ -23,6 +23,7 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -75,8 +76,11 @@ public class Student {
 					   @JoinColumn(name="authorities_id", referencedColumnName = "authorities_id")
 			   }
 	)
-	@JsonManagedReference
+	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private Set<Authority> authorities; 
+	
+	//@JsonManagedReference
 }

@@ -12,5 +12,7 @@ spring:
          #name: MDF
          #password: 12345
 URLS:
-   Authenticated: /api/student/byEmail,/api/student/update,/api/student/all,/api/course/**
+   Authenticated: 
+      WithoutRoles: /api/student/byEmail,/api/student/update,/api/student/all
+      WithBalanceRole: /api/course/**   
    Permitall: /api/student/register

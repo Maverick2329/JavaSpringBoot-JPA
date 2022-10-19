@@ -37,6 +37,7 @@ public class Authority {
 	private String name;
 	
 	@ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
-	@JsonBackReference
-	private Set<Student> student;
+		private Set<Student> student;
+	
+	//@JsonBackReference
 }
