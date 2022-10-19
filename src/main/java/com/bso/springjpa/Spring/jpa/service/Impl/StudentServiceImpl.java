@@ -89,5 +89,15 @@ public class StudentServiceImpl implements IStudentService {
 		//return this._studentRepository.findAll();
 		return this._studentRepository.GET_ALL_STUDENTS();
 	}
+	
+	public List<Student> retrieveAllStudentsAuthorities(){
+		try {
+			List<Student> studentsAuth = this._studentRepository.GET_ALL_STUDENTS_AUTHORITIES("Gabo@email.com");
+			return studentsAuth;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+	}
 
 }

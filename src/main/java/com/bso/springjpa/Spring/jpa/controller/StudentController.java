@@ -56,6 +56,11 @@ public class StudentController {
 		return new ResponseEntity<List<Student>>(this._studentService.retriveAllStudent(),HttpStatus.OK);
 	}
 	
+	@GetMapping("/authorities")
+	public ResponseEntity<List<Student>>RetieveAllStudentsAuthorities(){
+		return new ResponseEntity<List<Student>>(this._studentService.retrieveAllStudentsAuthorities(),HttpStatus.OK);
+	}
+	
 }
 
 

@@ -11,7 +11,10 @@ public interface IStudentRepository extends JpaRepository<Student, Long> {
 	public Student findByEmailId(String emailId);
 	public List<Student> findByGuardianNameNotNull();
 	
-	@Procedure(name = "GET_ALL_STUDENTS")
+	@Procedure(procedureName = "GET_ALL_STUDENTS")
 	public List<Student> GET_ALL_STUDENTS();
+	
+	@Procedure(procedureName = "GET_ALL_STUDENTS_AUTHORITIES")
+	public List<Student> GET_ALL_STUDENTS_AUTHORITIES(String email);
 }
 

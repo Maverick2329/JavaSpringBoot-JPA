@@ -16,5 +16,5 @@ public interface IStudentService {
 	
 	Boolean removeStudent(Student student);
 	
-	
+	List<Student> retrieveAllStudentsAuthorities();
 }
