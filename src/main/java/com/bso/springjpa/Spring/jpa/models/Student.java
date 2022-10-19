@@ -47,7 +47,7 @@ public class Student {
 	@Column(columnDefinition = "varchar(50)")
 	@NotBlank(message="field 'firstName' is mandatory")
 	@Size(min = 1, max = 25, message = "The name needs to have atleast 2 letters")
-	@Pattern(regexp = "[a-zA-Z]+$", message = "Name just allow letters")
+	@Pattern(regexp = "[a-zA-Z ]+$", message = "Name just allow letters")
 	private String firstName;
 	private String lastName;
 	@Column(name="email_address", nullable = false)
