@@ -10,6 +10,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.bso.springjpa.Spring.jpa.filter.RequestValidationBeforeFilter;
 
 @Configuration
 public class ProjectSecurityConfig {
@@ -55,13 +58,14 @@ public class ProjectSecurityConfig {
 		String[] listAuthenticatedWithBalanceRole = this.authenticatedURLWithBalanceRoles.split(",");
 		String[] listUrlPermited = this.permitedURL.split(",");
 		
-		http.authorizeHttpRequests()
-			.antMatchers(listAuthenticated).authenticated()
+		http.authorizeRequests()
+		    .antMatchers(listAuthenticated).authenticated()
 			.antMatchers(listAuthenticatedWithBalanceRole).hasAuthority("VIEWBALANCE")
 			.antMatchers(listUrlPermited).permitAll()
 			.and().formLogin()
 			.and().httpBasic()
-			.and().csrf().disable();
+			.and().csrf().disable()
+			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class);
 			
 		return http.build();
 	}

@@ -77,7 +77,7 @@ public class Student {
 	@ToString.Exclude
 	private Set<Course> courses;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name="student_authorities_table", 
 			   joinColumns = {
 					   @JoinColumn(name="student_id", referencedColumnName = "student_id")
@@ -87,6 +87,7 @@ public class Student {
 			   }
 	)
 	@ToString.Exclude
+	@JsonIgnore
 	private Set<Authority> authorities; 
 	
 	//@JsonManagedReference
