@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.bso.springjpa.Spring.jpa.filter.AuthoritiesLogginAtFilter;
+import com.bso.springjpa.Spring.jpa.filter.AuthoritiesLoggingAfterFilter;
 import com.bso.springjpa.Spring.jpa.filter.RequestValidationBeforeFilter;
 
 @Configuration
@@ -65,7 +67,9 @@ public class ProjectSecurityConfig {
 			.and().formLogin()
 			.and().httpBasic()
 			.and().csrf().disable()
-			//.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+			.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
+			.addFilterAt(new AuthoritiesLogginAtFilter(), BasicAuthenticationFilter.class)
 			;
 			
 		return http.build();

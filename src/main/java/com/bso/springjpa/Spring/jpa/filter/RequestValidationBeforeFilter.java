@@ -44,11 +44,20 @@ public class RequestValidationBeforeFilter implements Filter {
 					System.out.println(token);
 					System.out.println(decoded);
 					
-					int delim = token.indexOf(';');
+					int delim = token.indexOf(':');
 					System.out.println(delim);
 					if(delim == -1) {
 						throw new BadCredentialsException("Invalid Basic Authentication");
 					}
+					
+					String email = token.substring(0, delim);
+					System.out.println(email);
+					
+					//if(email.toLowerCase().contains("karla")) {
+					//	res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+					//	return;
+					//}
+					
 				} catch (IllegalArgumentException e) {
 					// TODO: handle exception
 					System.out.println(e);
