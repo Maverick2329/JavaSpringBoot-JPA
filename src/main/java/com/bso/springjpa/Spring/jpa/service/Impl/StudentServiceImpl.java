@@ -86,8 +86,16 @@ public class StudentServiceImpl implements IStudentService {
 	@Override
 	public List<Student> retriveAllStudent() {
 		// TODO Auto-generated method stub
-		//return this._studentRepository.findAll();
-		return this._studentRepository.GET_ALL_STUDENTS();
+		try {
+			return this._studentRepository.GET_ALL_STUDENTS();
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+			return null;
+		}
+		
+		//System.out.println("prueba");
+		//return this._studentRepository.GET_ALL_STUDENTS();		
 	}
 	
 	public List<Student> retrieveAllStudentsAuthorities(){

@@ -39,7 +39,7 @@ public class Authority {
 			
 	private String name;
 	
-	@ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "authorities")
 		private Set<Student> student;
 	
 	//@JsonBackReference

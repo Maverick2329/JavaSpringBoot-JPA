@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -24,6 +26,7 @@ import com.bso.springjpa.Spring.jpa.models.Student;
 import com.bso.springjpa.Spring.jpa.repository.IStudentRepository;
 
 @Service
+@Transactional
 public class StudentDetailsConfig implements AuthenticationProvider{
 	
 	@Autowired
@@ -66,6 +69,7 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 			if(_passwordEncoder.matches(password, student.getPassword())) {
 				//List<GrantedAuthority> authorities = new ArrayList<>();
 				//authorities.add(new SimpleGrantedAuthority(student.getRole()));
+				
 				return new UsernamePasswordAuthenticationToken(userName, password, getGrantedAuthorities(student.getAuthorities()));
 			}
 			else {
@@ -77,6 +81,7 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 	
 	
 	private List<GrantedAuthority> getGrantedAuthorities(Set<Authority> authorities){
+		System.out.println(authorities);
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 		for(Authority authority: authorities) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(authority.getName()));

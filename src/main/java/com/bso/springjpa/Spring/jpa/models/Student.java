@@ -72,12 +72,12 @@ public class Student {
 	@Embedded
 	private Guardian guardian;
 	
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
 	@JsonIgnore
 	@ToString.Exclude
 	private Set<Course> courses;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name="student_authorities_table", 
 			   joinColumns = {
 					   @JoinColumn(name="student_id", referencedColumnName = "student_id")
@@ -87,7 +87,6 @@ public class Student {
 			   }
 	)
 	@ToString.Exclude
-	@JsonIgnore
 	private Set<Authority> authorities; 
 	
 	//@JsonManagedReference

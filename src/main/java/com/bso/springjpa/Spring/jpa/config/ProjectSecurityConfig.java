@@ -65,7 +65,8 @@ public class ProjectSecurityConfig {
 			.and().formLogin()
 			.and().httpBasic()
 			.and().csrf().disable()
-			.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class);
+			//.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
+			;
 			
 		return http.build();
 	}
