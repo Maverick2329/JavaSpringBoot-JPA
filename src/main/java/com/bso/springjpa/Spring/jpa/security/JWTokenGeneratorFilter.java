@@ -43,6 +43,7 @@ public class JWTokenGeneratorFilter extends OncePerRequestFilter{
 							 .compact();
 			
 			response.setHeader(SecurityConstants.JWT_HEADER, jwt);
+			filterChain.doFilter(request, response);
 		}
 	}
 	

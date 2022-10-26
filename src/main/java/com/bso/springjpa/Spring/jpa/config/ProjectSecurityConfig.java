@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import com.bso.springjpa.Spring.jpa.filter.AuthoritiesLogginAtFilter;
 import com.bso.springjpa.Spring.jpa.filter.AuthoritiesLoggingAfterFilter;
 import com.bso.springjpa.Spring.jpa.filter.RequestValidationBeforeFilter;
+import com.bso.springjpa.Spring.jpa.security.JWTTokenValidatorFilter;
 import com.bso.springjpa.Spring.jpa.security.JWTokenGeneratorFilter;
 
 @Configuration
@@ -54,6 +55,7 @@ public class ProjectSecurityConfig  {
 			.and().httpBasic()
 			.and().csrf().disable()
 			.addFilterAfter(new JWTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+			.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 			//.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
 			//.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
 			//.addFilterAt(new AuthoritiesLogginAtFilter(), BasicAuthenticationFilter.class)
