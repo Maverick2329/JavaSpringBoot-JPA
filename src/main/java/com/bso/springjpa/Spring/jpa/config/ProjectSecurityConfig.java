@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import com.bso.springjpa.Spring.jpa.filter.AuthoritiesLogginAtFilter;
 import com.bso.springjpa.Spring.jpa.filter.AuthoritiesLoggingAfterFilter;
@@ -53,8 +54,9 @@ public class ProjectSecurityConfig  {
 			.antMatchers(listUrlPermited).permitAll()
 			.and().formLogin()
 			.and().httpBasic()
-			.and().csrf().disable()
-			.addFilterAfter(new JWTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+			//.and().csrf().disable()
+			.and().csrf().ignoringAntMatchers(listUrlPermited).csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+			.and().addFilterAfter(new JWTokenGeneratorFilter(), BasicAuthenticationFilter.class)
 			.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
 			//.addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class)
 			//.addFilterAfter(new AuthoritiesLoggingAfterFilter(), BasicAuthenticationFilter.class)
