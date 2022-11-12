@@ -1,6 +1,11 @@
 package com.bso.springjpa.Spring.jpa.service.Impl;
 
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +25,9 @@ public class StudentServiceImpl implements IStudentService {
 	
     @Autowired
     PasswordEncoder _passwordEncoder;
+    
+   @PersistenceContext
+    private EntityManager em;
 	
 	@Override
 	public Student addStudent(Student student) {
@@ -98,10 +106,15 @@ public class StudentServiceImpl implements IStudentService {
 		//return this._studentRepository.GET_ALL_STUDENTS();		
 	}
 	
+	@Transactional
 	public List<Student> retrieveAllStudentsAuthorities(){
 		try {
-			List<Student> studentsAuth = this._studentRepository.GET_ALL_STUDENTS_AUTHORITIES("Gabo@email.com");
-			return studentsAuth;
+			//List<Student> studentsAuth = this._studentRepository.GET_ALL_STUDENTS_AUTHORITIES("Gabo@email.com");
+			List studentAuth = (List) this.em.createStoredProcedureQuery("GET_ALL_STUDENTS_AUTHORITIES")
+					.registerStoredProcedureParameter("email", String.class, ParameterMode.IN)
+					.setParameter("email", "Karla@email.com")
+					.getResultList();
+			return studentAuth;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return null;

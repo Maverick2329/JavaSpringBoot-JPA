@@ -32,6 +32,8 @@ import com.bso.springjpa.Spring.jpa.filter.RequestValidationBeforeFilter;
 import com.bso.springjpa.Spring.jpa.security.JWTTokenValidatorFilter;
 import com.bso.springjpa.Spring.jpa.security.JWTokenGeneratorFilter;
 
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+
 @Configuration
 public class ProjectSecurityConfig  {
 
@@ -72,10 +74,8 @@ public class ProjectSecurityConfig  {
 			.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and().csrf().ignoringAntMatchers(listUrlPermited).csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 			.and().addFilterAfter(new JWTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-			.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)
-		    
-			
-		    .authorizeRequests()
+			.addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class)   
+			.authorizeRequests()
 		    .antMatchers(listAuthenticated).authenticated()
 			.antMatchers(listAuthenticatedWithBalanceRole).hasAuthority("VIEWBALANCE")
 			.antMatchers(listUrlPermited).permitAll()
@@ -95,5 +95,10 @@ public class ProjectSecurityConfig  {
 	@Bean
 	public PasswordEncoder passwordEndcoder() {
 		return new BCryptPasswordEncoder(5);
+	}
+	
+	@Bean
+	public Hibernate5Module hibernate5Module() {
+		return new Hibernate5Module();
 	}
 }

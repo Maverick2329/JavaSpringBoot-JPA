@@ -35,27 +35,6 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 	private PasswordEncoder _passwordEncoder;
 
 	
-	//@Override
-	//public Authentication loadUserByUsername(String _username) throws UsernameNotFoundException 
-	//{
-		// TODO Auto-generated method stub
-	//	String userName, password = null;
-	//	List<GrantedAuthority> authorities = null;
-	//	Student student = _studentRepository.findByEmailId(_username);
-	//	if(student == null) {
-	//		throw new UsernameNotFoundException("User details was not founded");
-	//	}
-	//	else {
-	//		if(_passwordEncoder.matches(password, student.getPassword())) {
-	//			authorities = new ArrayList<>();
-	//			authorities.add(new SimpleGrantedAuthority(student.getRole()));
-	//		}
-	//		/*userName = student.getEmailId();
-	//		password = student.getPassword();*/
-	//	}		
-	//	return new User(userName, password, authorities);
-	//}
-
 	@Override
 	public org.springframework.security.core.Authentication authenticate(
 			org.springframework.security.core.Authentication authentication) throws AuthenticationException {
@@ -67,8 +46,6 @@ public class StudentDetailsConfig implements AuthenticationProvider{
 		
 		if(student != null) {
 			if(_passwordEncoder.matches(password, student.getPassword())) {
-				//List<GrantedAuthority> authorities = new ArrayList<>();
-				//authorities.add(new SimpleGrantedAuthority(student.getRole()));
 				
 				return new UsernamePasswordAuthenticationToken(userName, password, getGrantedAuthorities(student.getAuthorities()));
 			}
